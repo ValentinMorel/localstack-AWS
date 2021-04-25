@@ -1,0 +1,34 @@
+version: '3.3'
+
+networks:
+
+  default:
+    external:
+      name: localstack-tutorial
+
+volumes:
+
+  localstack:
+
+services:
+
+  localstack:
+    image: localstack/localstack:0.10.7
+    ports:
+      - 8080:8080
+      - 4569:4569 # dynamodb
+      - 4574:4574 # lamba
+    environment:
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+      - DEFAULT_REGION=ap-southeast-2
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_EXECUTOR=docker-reuse
+      - PORT_WEB_UI=8080
+      - SERVICES=lambda,dynamodb
+      - LAMBDA_DOCKER_NETWORK=localstack-tutorial
+      - AWS_SECRET_ACCESS_KEY=fake-secret-key
+      - AWS_ACCESS_KEY_ID=fake-access-key  
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - localstack:/tmp/localstack/data
