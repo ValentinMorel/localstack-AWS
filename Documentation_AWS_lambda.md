@@ -145,8 +145,3 @@ aws --endpoint-url http://localhost:4566 lambda invoke \
 ```
 
 A file called "output" should be created. The content can be read with 'cat' command.
-
-## Comparison Lambda vs ECS
-
-Later during the development, ECS has been found as an existing service on AWS cloud. It corresponds to container instances. 
-In fact, that's THE adapated solution for the objective since lambda has a system of shutdown after 10 min... and it's not really possible to zip docker containers as a function... Except if we deploy localstack in docker-compose.yaml with other services that will provide an extreme rigidity, impossible to migrate in real situations... 
